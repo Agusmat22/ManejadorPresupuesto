@@ -1,0 +1,30 @@
+﻿@model TipoCuenta
+
+
+<h1>Editar Tipo Cuenta: @Model.Nombre</h1>
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Editar">
+
+    <!--obtenemos el ID del registro que queremos actualiza, lo vamos a necesitar cuando el usuario postee el formulario-->
+    <input type="hidden" asp-for="Id" />
+    <div class="mb-3">
+
+        <label asp-for="Nombre" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="Nombre" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>  <!--ACA LO QUE HAGO ES MOSTRARLO ABAJO DEL INPUT PARA QUE SE RECONOZCA-->
+
+    </div>
+
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+    <a type="submit" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+</form>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial" />
+}

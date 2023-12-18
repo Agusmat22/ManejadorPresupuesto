@@ -1,0 +1,44 @@
+﻿@model TipoCuenta
+
+
+@{
+    ViewData["title"] = "Crear tipos cuentas";
+}
+
+<h1>Crear tipo de cuenta</h1>
+<h5>El tipo de cuentas se refiere a que podemos agrupar cuentas.
+    Ejemplos: Prestamos, tarjetas de credito, etc
+</h5>
+
+<!-- ESTO PERIMTE ADMINISTRAR LAS VALIDACIONES DE LAS PROPIEDADES
+
+All -> muestra todos los errores arriba en este mismo div
+
+ModelOnly -> Muestra los errores solo en cada asp-validation-for (o sea en cada span)
+
+
+--> 
+
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="Crear">
+    <div class="mb-3">
+
+        <label asp-for="Nombre" class="form-label"></label>
+        <input type="text" class="form-control" asp-for="Nombre" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>  <!--ACA LO QUE HAGO ES MOSTRARLO ABAJO DEL INPUT PARA QUE SE RECONOZCA-->
+         
+    </div>
+  
+
+    <button type="submit" class="btn btn-primary">Enviar</button>
+    <a type="submit" asp-action="Index" class="btn btn-secondary">Cancelar</a>
+
+</form>
+
+
+@section Scripts {
+
+    <partial name="_ValidationScriptsPartial"/>
+}

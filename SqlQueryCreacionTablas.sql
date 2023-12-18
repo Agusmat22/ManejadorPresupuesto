@@ -1,0 +1,124 @@
+/*CREACION DE TABLA TRANSACCIONES*/
+
+CREATE TABLE Transacciones (
+Id INT NOT NULL PRIMARY KEY IDENTITY,
+UsuarioId INT NOT NULL,
+FechaTransaccion DATETIME NOT NULL,
+Monto DECIMAL(18,2) NOT NULL,
+TipoOperacionId INT NOT NULL,
+Nota NVARCHAR(1000),
+CuentaId INT NOT NULL,
+CategoriaId INT NOT NULL
+)
+
+/*CLAVE FORANEA A TRANSACCIONES*/
+
+ALTER TABLE Transacciones
+ADD CONSTRAINT FK_CuentaId_Id
+FOREIGN KEY (CuentaId) REFERENCES Cuentas(Id);
+
+
+ALTER TABLE Transacciones
+ADD CONSTRAINT FK_TipoOperacionId_Id
+FOREIGN KEY (TipoOperacionId) REFERENCES TipoOperaciones (Id)
+
+ALTER TABLE Transacciones
+ADD CONSTRAINT FK_Transacciones_Usuarios
+FOREIGN KEY (UsuarioId) REFERENCES Usuarios (Id)
+
+ALTER TABLE Transacciones
+ADD CONSTRAINT FK_Transacciones_Categorias
+FOREIGN KEY (CategoriaId) REFERENCES Categorias (Id)
+
+
+
+
+/*CREACION TABLA TIPO OPERACIONES*/
+
+CREATE TABLE TipoOperaciones (
+
+Id INT NOT NULL PRIMARY KEY IDENTITY,
+Descripcion NVARCHAR(50) NOT NULL 
+
+
+)
+
+
+
+
+
+/*CREACION DE TABLA TIPO CUENTAS*/
+
+CREATE TABLE TiposCuentas (
+
+Id INT NOT NULL PRIMARY KEY IDENTITY,
+Nombre NVARCHAR(50) NOT NULL,
+UsuarioId INT NOT NULL,
+Orden INT NOT NULL
+
+)
+
+/*CREO CLAVE FORANEA*/
+
+ALTER TABLE TiposCuentas
+ADD CONSTRAINT FK_TiposCuentas_Usuario
+FOREIGN KEY (UsuarioId) REFERENCES Usuarios (Id)
+
+
+
+
+/*CREACION DE TABLA CUENTAS*/
+
+CREATE TABLE Cuentas (
+
+Id INT NOT NULL PRIMARY KEY IDENTITY,
+Nombre NVARCHAR(50) NOT NULL,
+TipoCuentaId INT NOT NULL,
+Balance DECIMAL(18,2),
+Descripcion NVARCHAR(1000)
+
+)
+
+/*agrego la clave foranea a una tabla ya creada*/
+
+ALTER TABLE Cuentas
+ADD CONSTRAINT  FK_Cuentas_TiposCuentas
+FOREIGN KEY (TipoCuentaId) REFERENCES Cuentas(Id);
+
+
+
+/*CREACION DE TABLA USUARIO*/
+
+CREATE TABLE Usuarios (
+Id INT NOT NULL PRIMARY KEY IDENTITY,
+Email NVARCHAR(256) NOT NULL,
+EmailNormalizado NVARCHAR(256) NOT NULL,
+PasswordHash NVARCHAR(MAX) NOT NULL
+
+)
+
+INSERT INTO Usuarios (Email,EmailNormalizado,PasswordHash) VALUES ('agustin@hotmail.com','AGUSTIN@HOTMAIL.COM','abc');
+
+
+/*TABLA DE CATEGORIAS*/
+
+CREATE TABLE Categorias (
+
+Id INT NOT NULL PRIMARY KEY IDENTITY,
+Nombre NVARCHAR(50) NOT NULL,
+TipoOperacionId INT NOT NULL,
+UsuarioId INT NOT NULL
+
+)
+
+
+/*CLAVE FORANEA*/
+
+ALTER TABLE Categorias
+ADD CONSTRAINT FK_Categorias_TipoOperaciones
+FOREIGN KEY (TipoOperacionId) REFERENCES  TipoOperaciones(Id)
+
+ALTER TABLE Categorias
+ADD CONSTRAINT FK_Categorias_Usuarios
+FOREIGN KEY (UsuarioId) REFERENCES  Usuarios(Id)
+
